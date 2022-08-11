@@ -10,16 +10,163 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:mysql-explorer.helloWorld"
+    "onView:connect",
+    "onView:database",
+    "onView:table"
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "mysql-explorer",
+          "title": "MySQL Explorer",
+          "icon": "media/mysql.svg"
+        }
+      ]
+    },
+    "views": {
+      "mysql-explorer": [
+        {
+          "id": "connect",
+          "name": "CONNECT"
+        },
+        {
+          "id": "database",
+          "name": "DATABASE"
+        },
+        {
+          "id": "table",
+          "name": "TABLE"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "connect",
+        "contents": "No connect found. [learn more](https://github.com/zomixi/mysql-explorer/)\n"
+      },
+      {
+        "view": "database",
+        "contents": "No database found. [learn more](https://github.com/zomixi/mysql-explorer/)\n"
+      },
+      {
+        "view": "table",
+        "contents": "No table found. [learn more](https://github.com/zomixi/mysql-explorer/)\n"
+      }
+    ],
     "commands": [
       {
-        "command": "mysql-explorer.helloWorld",
-        "title": "Hello World"
+        "command": "connect.refresh",
+        "title": "Refresh",
+        "icon": {
+          "light": "resources/light/refresh.svg",
+          "dark": "resources/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "connect.add",
+        "title": "Add",
+        "icon": {
+          "light": "resources/light/add.svg",
+          "dark": "resources/dark/add.svg"
+        }
+      },
+      {
+        "command": "connect.edit",
+        "title": "Edit",
+        "icon": {
+          "light": "resources/light/edit.svg",
+          "dark": "resources/dark/edit.svg"
+        }
+      },
+      {
+        "command": "connect.delete",
+        "title": "Delete",
+        "icon": {
+          "light": "resources/light/delete.svg",
+          "dark": "resources/dark/delete.svg"
+        }
+      },
+      {
+        "command": "database.refresh",
+        "title": "Refresh",
+        "icon": {
+          "light": "resources/light/refresh.svg",
+          "dark": "resources/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "database.add",
+        "title": "Add",
+        "icon": {
+          "light": "resources/light/add.svg",
+          "dark": "resources/dark/add.svg"
+        }
+      },
+      {
+        "command": "database.edit",
+        "title": "Edit",
+        "icon": {
+          "light": "resources/light/edit.svg",
+          "dark": "resources/dark/edit.svg"
+        }
+      },
+      {
+        "command": "database.delete",
+        "title": "Delete",
+        "icon": {
+          "light": "resources/light/delete.svg",
+          "dark": "resources/dark/delete.svg"
+        }
       }
-    ]
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "connect.refresh",
+          "when": "view == connect",
+          "group": "navigation"
+        },
+        {
+          "command": "connect.add",
+          "when": "view == connect",
+          "group": "navigation"
+        },
+        {
+          "command": "database.refresh",
+          "when": "view == database",
+          "group": "navigation"
+        },
+        {
+          "command": "database.add",
+          "when": "view == database",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "connect.edit",
+          "when": "view == connect",
+          "group": "inline"
+        },
+        {
+          "command": "connect.delete",
+          "when": "view == connect",
+          "group": "inline"
+        },
+        {
+          "command": "database.edit",
+          "when": "view == database",
+          "group": "inline"
+        },
+        {
+          "command": "database.delete",
+          "when": "view == database",
+          "group": "inline"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
