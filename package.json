@@ -10,7 +10,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onView:connect",
+    "onView:connection",
     "onView:database",
     "onView:table"
   ],
@@ -28,8 +28,8 @@
     "views": {
       "mysql-explorer": [
         {
-          "id": "connect",
-          "name": "CONNECT"
+          "id": "connection",
+          "name": "CONNECTION"
         },
         {
           "id": "database",
@@ -43,8 +43,8 @@
     },
     "viewsWelcome": [
       {
-        "view": "connect",
-        "contents": "No connect found. [learn more](https://github.com/zomixi/mysql-explorer/)\n"
+        "view": "connection",
+        "contents": "No connection found. [learn more](https://github.com/zomixi/mysql-explorer/)\n"
       },
       {
         "view": "database",
@@ -57,7 +57,7 @@
     ],
     "commands": [
       {
-        "command": "connect.refresh",
+        "command": "connection.refresh",
         "title": "Refresh",
         "icon": {
           "light": "resources/light/refresh.svg",
@@ -65,7 +65,7 @@
         }
       },
       {
-        "command": "connect.add",
+        "command": "connection.add",
         "title": "Add",
         "icon": {
           "light": "resources/light/add.svg",
@@ -73,7 +73,7 @@
         }
       },
       {
-        "command": "connect.edit",
+        "command": "connection.edit",
         "title": "Edit",
         "icon": {
           "light": "resources/light/edit.svg",
@@ -81,11 +81,27 @@
         }
       },
       {
-        "command": "connect.delete",
+        "command": "connection.delete",
         "title": "Delete",
         "icon": {
           "light": "resources/light/delete.svg",
           "dark": "resources/dark/delete.svg"
+        }
+      },
+      {
+        "command": "connection.connect",
+        "title": "Connect",
+        "icon": {
+          "light": "resources/light/connect.svg",
+          "dark": "resources/dark/connect.svg"
+        }
+      },
+      {
+        "command": "connection.disconnect",
+        "title": "Connect",
+        "icon": {
+          "light": "resources/light/disconnect.svg",
+          "dark": "resources/dark/disconnect.svg"
         }
       },
       {
@@ -124,13 +140,13 @@
     "menus": {
       "view/title": [
         {
-          "command": "connect.refresh",
-          "when": "view == connect",
+          "command": "connection.refresh",
+          "when": "view == connection",
           "group": "navigation"
         },
         {
-          "command": "connect.add",
-          "when": "view == connect",
+          "command": "connection.add",
+          "when": "view == connection",
           "group": "navigation"
         },
         {
@@ -146,13 +162,23 @@
       ],
       "view/item/context": [
         {
-          "command": "connect.edit",
-          "when": "view == connect",
+          "command": "connection.edit",
+          "when": "view == connection",
           "group": "inline"
         },
         {
-          "command": "connect.delete",
-          "when": "view == connect",
+          "command": "connection.delete",
+          "when": "view == connection",
+          "group": "inline"
+        },
+        {
+          "command": "connection.connect",
+          "when": "view == connection && viewItem == disconnectedConnection",
+          "group": "inline"
+        },
+        {
+          "command": "connection.disconnect",
+          "when": "view == connection && viewItem == connectedConnection",
           "group": "inline"
         },
         {
@@ -185,6 +211,7 @@
     "@commitlint/config-conventional": "^17.0.3",
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.1",
+    "@types/mysql": "^2.15.21",
     "@types/node": "16.x",
     "@types/vscode": "^1.69.0",
     "@typescript-eslint/eslint-plugin": "^5.30.7",
@@ -209,5 +236,8 @@
     "*.ts": "eslint --cache --fix",
     "**/*": "prettier --write --ignore-unknown",
     "*.css": "stylelint --fix"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1"
   }
 }
