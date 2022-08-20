@@ -15,6 +15,7 @@ async function showForm<T extends FormValues = FormValues>(
 ) {
   const formValues: FormValues = {};
   const schemaKeys = Object.keys(schema);
+  const totalSteps = schemaKeys.length;
 
   for (let index = 0; index < schemaKeys.length; index++) {
     const schemaKey = schemaKeys[index];
@@ -27,8 +28,6 @@ async function showForm<T extends FormValues = FormValues>(
       buttons,
       prompt,
       validationMessage,
-      step,
-      totalSteps,
       enabled,
       busy,
       ignoreFocusOut,
@@ -48,8 +47,8 @@ async function showForm<T extends FormValues = FormValues>(
       buttons,
       prompt,
       validationMessage,
-      step,
-      totalSteps,
+      step: index + 1,
+      totalSteps: totalSteps,
       enabled,
       busy,
       ignoreFocusOut,
