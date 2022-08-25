@@ -1,4 +1,4 @@
-import { Connection, createConnection } from "mysql";
+import { Connection, createConnection } from "mysql2";
 
 const connect = (
   host: string,

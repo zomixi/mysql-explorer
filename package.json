@@ -206,6 +206,9 @@
     "test": "node ./out/test/runTest.js",
     "prepare": "husky install"
   },
+  "dependencies": {
+    "mysql2": "^2.3.3"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
@@ -236,8 +239,5 @@
     "*.ts": "eslint --cache --fix",
     "**/*": "prettier --write --ignore-unknown",
     "*.css": "stylelint --fix"
-  },
-  "dependencies": {
-    "mysql": "^2.18.1"
   }
 }
