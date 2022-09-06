@@ -98,7 +98,7 @@
       },
       {
         "command": "connection.disconnect",
-        "title": "Connect",
+        "title": "Disconnect",
         "icon": {
           "light": "resources/light/disconnect.svg",
           "dark": "resources/dark/disconnect.svg"
@@ -121,19 +121,19 @@
         }
       },
       {
-        "command": "database.edit",
-        "title": "Edit",
-        "icon": {
-          "light": "resources/light/edit.svg",
-          "dark": "resources/dark/edit.svg"
-        }
-      },
-      {
         "command": "database.delete",
         "title": "Delete",
         "icon": {
           "light": "resources/light/delete.svg",
           "dark": "resources/dark/delete.svg"
+        }
+      },
+      {
+        "command": "database.connect",
+        "title": "Connect",
+        "icon": {
+          "light": "resources/light/connect.svg",
+          "dark": "resources/dark/connect.svg"
         }
       }
     ],
@@ -162,16 +162,6 @@
       ],
       "view/item/context": [
         {
-          "command": "connection.edit",
-          "when": "view == connection",
-          "group": "inline"
-        },
-        {
-          "command": "connection.delete",
-          "when": "view == connection",
-          "group": "inline"
-        },
-        {
           "command": "connection.connect",
           "when": "view == connection && viewItem == disconnectedConnection",
           "group": "inline"
@@ -182,13 +172,23 @@
           "group": "inline"
         },
         {
-          "command": "database.edit",
-          "when": "view == database",
+          "command": "connection.edit",
+          "when": "view == connection && viewItem == disconnectedConnection",
+          "group": "inline"
+        },
+        {
+          "command": "connection.delete",
+          "when": "view == connection && viewItem == disconnectedConnection",
+          "group": "inline"
+        },
+        {
+          "command": "database.connect",
+          "when": "view == database && viewItem == disconnectedDatabase",
           "group": "inline"
         },
         {
           "command": "database.delete",
-          "when": "view == database",
+          "when": "view == database && viewItem == disconnectedDatabase",
           "group": "inline"
         }
       ]

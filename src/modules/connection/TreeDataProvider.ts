@@ -2,7 +2,7 @@ import { FormSchema, showForm } from "@/components/form";
 import { ErrorCode } from "@/constants/error";
 import { CONNECTION_DATA_KEY } from "@/constants/storage";
 import { connectedConnection$ } from "@/store";
-import { connect } from "@/utils/mysql";
+import { connectConnection, disconnectConnection } from "@/utils/mysql";
 import * as vscode from "vscode";
 import { TreeItem } from "./TreeItem";
 
@@ -107,14 +107,13 @@ export default class TreeDataProvider
       const index = this.treeData.findIndex(
         (element) => element.id === target.id
       );
-      const newNode = { ...target, ...formValues };
 
       this.treeData[index] = new TreeItem(
-        newNode.id,
-        newNode.host,
-        newNode.port,
-        newNode.userName,
-        newNode.password
+        target.id,
+        formValues.host,
+        formValues.port,
+        formValues.userName,
+        formValues.password
       );
 
       await this.setCacheTreeData(this.treeData);
@@ -127,8 +126,22 @@ export default class TreeDataProvider
     }
   }
 
+  async deleteTreeItem(target: TreeItem) {
+    if (this.connectedId === target.id) {
+      vscode.window.showErrorMessage("Connected connection cannot be deleted");
+      return;
+    }
+
+    this.treeData = this.treeData.filter((element) => element.id !== target.id);
+
+    await this.setCacheTreeData(this.treeData);
+
+    this._onDidChangeTreeData.fire();
+  }
+
   async connectTreeItem(target: TreeItem) {
     connectedConnection$.current?.destroy();
+    connectedConnection$.fire(undefined);
 
     vscode.window.withProgress(
       {
@@ -138,7 +151,7 @@ export default class TreeDataProvider
       },
       async () => {
         try {
-          const connection = await connect(
+          const connection = await connectConnection(
             target.host,
             target.port,
             target.userName,
@@ -159,8 +172,10 @@ export default class TreeDataProvider
 
   async disconnectTreeItem(target: TreeItem) {
     this.connectedId = undefined;
-    connectedConnection$.current?.destroy();
-    connectedConnection$.fire();
+    if (connectedConnection$.current) {
+      disconnectConnection(connectedConnection$.current);
+    }
+    connectedConnection$.fire(undefined);
 
     this.toggleTreeItem(target, false);
   }
@@ -191,21 +206,6 @@ export default class TreeDataProvider
 
       return element;
     });
-
-    await this.setCacheTreeData(this.treeData);
-
-    this._onDidChangeTreeData.fire();
-  }
-
-  async deleteTreeItem(target: TreeItem) {
-    if (this.connectedId === target.id) {
-      vscode.window.showErrorMessage("Connected connection cannot be deleted");
-      return;
-    }
-
-    this.treeData = this.treeData.filter((element) => element.id !== target.id);
-
-    await this.setCacheTreeData(this.treeData);
 
     this._onDidChangeTreeData.fire();
   }

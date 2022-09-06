@@ -1,8 +1,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
-import { CONNECTED_CONNECTION_KEY } from "./constants/storage";
 import ConnectionModule from "./modules/connection";
+import DatabaseModule from "./modules/database";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -12,11 +12,10 @@ export function activate(context: vscode.ExtensionContext) {
   console.info('Your extension "mysql-explorer" is now active!');
 
   new ConnectionModule(context);
+  new DatabaseModule(context);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate(context: vscode.ExtensionContext) {
+export function deactivate() {
   console.info('Your extension "mysql-explorer" is now deactivate!');
-
-  context.globalState.update(CONNECTED_CONNECTION_KEY, undefined);
 }

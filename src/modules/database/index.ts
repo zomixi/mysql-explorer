@@ -2,9 +2,9 @@ import * as vscode from "vscode";
 import TreeDataProvider from "./TreeDataProvider";
 import { TreeItem } from "./TreeItem";
 
-const MODULE_NAME = "connection";
+const MODULE_NAME = "database";
 
-export default class ConnectionModule {
+export default class DatabaseModule {
   readonly treeDataProvider;
   readonly treeView;
 
@@ -25,12 +25,6 @@ export default class ConnectionModule {
       this.treeDataProvider.addTreeItem()
     );
 
-    vscode.commands.registerCommand(
-      `${MODULE_NAME}.edit`,
-      async (target: TreeItem) =>
-        await this.treeDataProvider.updateTreeItem(target)
-    );
-
     vscode.commands.registerCommand(`${MODULE_NAME}.refresh`, async () =>
       this.treeDataProvider.refresh()
     );
@@ -38,12 +32,6 @@ export default class ConnectionModule {
     vscode.commands.registerCommand(
       `${MODULE_NAME}.connect`,
       async (target: TreeItem) => this.treeDataProvider.connectTreeItem(target)
-    );
-
-    vscode.commands.registerCommand(
-      `${MODULE_NAME}.disconnect`,
-      async (target: TreeItem) =>
-        this.treeDataProvider.disconnectTreeItem(target)
     );
 
     vscode.commands.registerCommand(

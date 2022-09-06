@@ -24,6 +24,6 @@ class Store<T> {
   }
 }
 
-const connectedConnection$ = new Store<Connection | undefined | void>();
+const connectedConnection$ = new Store<Connection | undefined>();
 
 export { connectedConnection$ };
